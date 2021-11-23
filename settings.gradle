@@ -1,0 +1,3 @@
+rootProject.name='SerialTools'
+include ':app'
+include ':serialport'
