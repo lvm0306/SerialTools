@@ -237,15 +237,16 @@ public final class SerialPort {
         private int stopBits = 1;
         private int flags = 0;
 
-        private Builder(File device, int baudrate) {
+        public Builder(File device, int baudrate) {
             this.device = device;
             this.baudrate = baudrate;
         }
 
-        private Builder(String devicePath, int baudrate) {
+        public Builder(String devicePath, int baudrate) {
             this(new File(devicePath), baudrate);
         }
-
+        public Builder(){
+        }
         /**
          * 数据位
          *
@@ -254,6 +255,24 @@ public final class SerialPort {
          */
         public Builder dataBits(int dataBits) {
             this.dataBits = dataBits;
+            return this;
+        }
+        /**
+         * 设备路径
+         *
+         * @return
+         */
+        public Builder devicePath(String devicePath) {
+            this.device = new File(devicePath);
+            return this;
+        }
+        /**
+         * 波特率
+         *
+         * @return
+         */
+        public Builder baudrate(int baudrate) {
+            this.baudrate = baudrate;
             return this;
         }
 
@@ -289,6 +308,31 @@ public final class SerialPort {
             this.flags = flags;
             return this;
         }
+
+        public String getDevice() {
+            return device.getAbsolutePath();
+        }
+
+        public int getBaudrate() {
+            return baudrate;
+        }
+
+        public int getDataBits() {
+            return dataBits;
+        }
+
+        public int getParity() {
+            return parity;
+        }
+
+        public int getStopBits() {
+            return stopBits;
+        }
+
+        public int getFlags() {
+            return flags;
+        }
+
 
         /**
          * 打开并返回串口

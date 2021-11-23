@@ -23,9 +23,21 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        AProvider aProvider = new AProvider();
         try {
-            serialPort = aProvider.initSerialPort("/dev/ttyS3", 115200);
+            AProvider aProvider = new AProvider();
+//            serialPort = aProvider.initSerialPort("/dev/ttyS3", 115200);
+//            aProvider.setiSetRecvListener(new SerialBaseProvider.ISetRecv() {
+//                @Override
+//                public void recv(byte[] buffer, int size) {
+//
+//                }
+//            });
+            SerialPort.Builder builder = new SerialPort.Builder("/dev/ttyS3", 115200);
+            builder.stopBits(1)
+                    .dataBits(8)
+                    .parity(2)
+                    .flags(0);
+            serialPort = aProvider.initSerialPort(builder);
             aProvider.setiSetRecvListener(new SerialBaseProvider.ISetRecv() {
                 @Override
                 public void recv(byte[] buffer, int size) {
